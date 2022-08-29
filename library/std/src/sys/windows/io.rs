@@ -35,7 +35,7 @@ impl<'a> IoSlice<'a> {
     }
 
     #[inline]
-    pub fn as_slice(&self) -> &[u8] {
+    pub fn as_slice(&self) -> &'a [u8] {
         unsafe { slice::from_raw_parts(self.vec.buf as *mut u8, self.vec.len as usize) }
     }
 }
@@ -75,6 +75,11 @@ impl<'a> IoSliceMut<'a> {
 
     #[inline]
     pub fn as_mut_slice(&mut self) -> &mut [u8] {
+        unsafe { slice::from_raw_parts_mut(self.vec.buf as *mut u8, self.vec.len as usize) }
+    }
+
+    #[inline]
+    pub fn into_slice(self) -> &'a mut [u8] {
         unsafe { slice::from_raw_parts_mut(self.vec.buf as *mut u8, self.vec.len as usize) }
     }
 }

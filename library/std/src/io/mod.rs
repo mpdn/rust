@@ -1167,6 +1167,13 @@ impl<'a> IoSliceMut<'a> {
             bufs[0].advance(n - accumulated_len)
         }
     }
+
+    /// Returns the slice this `IoSlice` was originally created with.
+    #[unstable(feature = "io_slice_cast", issue = "none")]
+    #[inline]
+    pub fn into_slice(self) -> &'a mut [u8] {
+        self.0.into_slice()
+    }
 }
 
 #[stable(feature = "iovec", since = "1.36.0")]
@@ -1309,6 +1316,13 @@ impl<'a> IoSlice<'a> {
         } else {
             bufs[0].advance(n - accumulated_len)
         }
+    }
+
+    /// Returns the slice this `IoSlice` was originally created with.
+    #[unstable(feature = "io_slice_cast", issue = "none")]
+    #[inline]
+    pub fn as_slice(&self) -> &'a [u8] {
+        self.0.as_slice()
     }
 }
 
